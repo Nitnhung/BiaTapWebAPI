@@ -24,7 +24,7 @@ namespace BiaTapWebAPI.Controllers
 
         
 
-        [HttpGet("GetMonthlyRevenueDto")]
+        [HttpGet("revenue-by-month")]
         public IActionResult GetMonthlyRevenueDto()
         {
             var result = _orderService.GetMonthlyRevenueDto();

@@ -73,7 +73,7 @@ namespace BiaTapWebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetTopProductDto")]
+        [HttpGet("top-3-best-sellers")]
         public IActionResult GetTopProductDto()
         {
             var result = _productService.GetTopProductDto();
