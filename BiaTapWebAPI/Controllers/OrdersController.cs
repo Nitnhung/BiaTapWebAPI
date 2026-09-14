@@ -6,28 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace BiaTapWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
-    public class OrderController : Controller
+    [Route("api/orders")]
+    public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService)
+        public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;
         }
 
-        [HttpGet("OrderDetail")]
+        [HttpGet("details")]
         public IActionResult GetDetailOrder()
         {
             var result = _orderService.GetDetailOrder();
             return Ok(result);
         }
 
-        [HttpGet("GetSanPhamChuaBan")]
-        public IActionResult GetSanPhamChuaBan()
-        {
-            var result = _orderService.GetSanPhamChuaBan();
-            return Ok(result);
-        }
+        
 
         [HttpGet("GetMonthlyRevenueDto")]
         public IActionResult GetMonthlyRevenueDto()

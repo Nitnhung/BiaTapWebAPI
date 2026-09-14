@@ -7,7 +7,7 @@ namespace BiaTapWebAPI.Services.Interfaces
     {
         List<CategoryReportDto> GetCategoryReport();
 
-        List<CategoryListProduct> GetListCategoryDetail(Category category, Product product);
-        List<CategoryRevenueDto> GetCategoryRevenueDto();
+        List<CategoryListProduct> GetListCategoryDetail();
+        //List<CategoryRevenueDto> GetCategoryRevenueDto();
     }
 }

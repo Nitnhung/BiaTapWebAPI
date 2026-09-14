@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace BiaTapWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
-    public class ProductController : Controller
+    [Route("api/products")]
+    public class ProductsController : Controller
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
@@ -22,7 +22,7 @@ namespace BiaTapWebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("sort")]
+        [HttpGet("sorted")]
         public IActionResult GetSortProduct()
         {
             var result = _productService.GetSortProducts();
@@ -30,43 +30,43 @@ namespace BiaTapWebAPI.Controllers
         }
 
 
-        [HttpGet("page")]
+        [HttpGet("pageNumber={pageNumber}&pageSize={pageSize}")]
         public IActionResult GetProductsPaging(int pageNumber, int pageSize)
         {
             var result = _productService.GetProductsPaging(pageNumber, pageSize);
             return Ok(result);
         }
 
-        [HttpGet("Find")]
+        [HttpGet("{id}")]
         public IActionResult GetProductById(int idProduct)
         {
             var result = _productService.GetProductById(idProduct);
             return Ok(result);
         }
 
-        [HttpGet("InventoryValue")]
+        [HttpGet("total-inventory-value")]
         public IActionResult GetTotalInventoryValue()
         {
             var result = _productService.GetTotalInventoryValue();
             return Ok(result);
         }
 
-        [HttpGet("max")]
+        [HttpGet("most-expensive-available")]
         public IActionResult GetProductMax()
         {
             var result = _productService.GetProductMax();
             return Ok(result);
         }
 
-        [HttpGet("sum")]
-        public IActionResult GetSoLuongSanPhamDaBan(Order order, Product product)
+        [HttpGet("total-completed-quantity")]
+        public IActionResult GetSoLuongSanPhamDaBan()
         {
-            var result = _productService.GetSoLuongSanPhamDaBan(order, product);
+            var result = _productService.GetSoLuongSanPhamDaBan();
             return Ok(result);
         }
 
 
-        [HttpGet("ProductReport")]
+        [HttpGet("stock-status")]
         public IActionResult GetProductReport()
         {
             var result = _productService.GetProductReport();
@@ -80,6 +80,12 @@ namespace BiaTapWebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("unsold")]
+        public IActionResult GetSanPhamChuaBan()
+        {
+            var result = _productService.GetSanPhamChuaBan();
+            return Ok(result);
+        }
 
 
 

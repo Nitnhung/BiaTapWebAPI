@@ -11,27 +11,20 @@ namespace BiaTapWebAPI.Services.Implementations
         {
             return SeedData.Orders
                 .Where(o => o.Status == "completed")
-                .Join(SeedData.Products
-                , o => o.ProductId
-                , p => p.Id
-                , (o, p) => new OrderReportDto()
+                .Join(SeedData.Products, 
+                o => o.ProductId, 
+                p => p.Id, 
+                (o, p) => new OrderReportDto()
                 {
-                    OrderId = o.ProductId
-                    , ProductName = p.Name
-                    , Quantity = o.Quantity
-                    , Price = p.Price
-                    , TotalAmount = p.Price * o.Quantity
+                    OrderId = o.ProductId, 
+                    ProductName = p.Name, 
+                    Quantity = o.Quantity,
+                    Price = p.Price, 
+                    TotalAmount = p.Price * o.Quantity
                 }).ToList();
         }
 
-        public List<Product> GetSanPhamChuaBan()
-        {
-            return SeedData.Products
-                .Where(p=>!SeedData.Orders
-                    .Any(o=>o.Status=="completed" && o.ProductId==p.Id))
-                .ToList();
-                
-        }
+        
         public List<MonthlyRevenueDto> GetMonthlyRevenueDto()
         {
             return SeedData.Orders
@@ -39,11 +32,10 @@ namespace BiaTapWebAPI.Services.Implementations
                 .GroupBy(o=>o.OrderDate.Month)
                 .Select(
                 g=> new MonthlyRevenueDto { 
-                Month = g.Key
-                , OrderCount = g.Count()
-                , TotalQuantitySold = g.Sum(p=>p.Quantity)}
-                )
-                .ToList();
+                Month = g.Key, 
+                    OrderCount = g.Count(), 
+                    TotalQuantitySold = g.Sum(p=>p.Quantity)}
+                ).ToList();
 
         }
     }

@@ -14,9 +14,9 @@ namespace BiaTapWebAPI.Services.Interfaces
         double GetTotalInventoryValue();
         Product GetProductMax();
 
-        int GetSoLuongSanPhamDaBan(Order order, Product product);
+        int GetSoLuongSanPhamDaBan();
         List<ProductReportDto> GetProductReport();
-
+        List<Product> GetSanPhamChuaBan();
         List<TopProductDto> GetTopProductDto();
     }
 }

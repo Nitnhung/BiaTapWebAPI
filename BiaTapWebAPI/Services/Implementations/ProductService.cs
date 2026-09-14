@@ -46,17 +46,25 @@ namespace BiaTapWebAPI.Services.Implementations
                 .FirstOrDefault();
         }
 
-        public int GetSoLuongSanPhamDaBan(Order order, Product product)
+        public int GetSoLuongSanPhamDaBan()
         {
             return SeedData.Orders
                 .Where(o => o.Status == "completed")
                 .Join(
-                SeedData.Products
-                , p => p.ProductId
-                , o => o.Id
-                , (o, p) => new { p, o } )
+                SeedData.Products, 
+                p => p.ProductId, 
+                o => o.Id, 
+                (o, p) => new { p, o } )
                 .Sum(p => p.o.Quantity);
    
+
+        }
+        public List<Product> GetSanPhamChuaBan()
+        {
+            return SeedData.Products
+                .Where(p => !SeedData.Orders
+                    .Any(o => o.Status == "completed" && o.ProductId == p.Id))
+                .ToList();
 
         }
 
@@ -65,8 +73,8 @@ namespace BiaTapWebAPI.Services.Implementations
             return SeedData.Products
                 .GroupBy(p => p.Stock > 0 ? "con" : "het")
                 .Select(g => new ProductReportDto {
-                Status = g.Key
-                ,Products = g.ToList() })
+                    Status = g.Key
+                    ,Products = g.ToList() })
                 .ToList();
 
         }
@@ -75,16 +83,16 @@ namespace BiaTapWebAPI.Services.Implementations
         {
             return SeedData.Orders
                 .Where(o => o.Status == "completed")
-                .Join(SeedData.Products
-                , o => o.ProductId
-                , p => p.Id
-                , (o, p) => new { o, p })
+                .Join(SeedData.Products, 
+                o => o.ProductId, 
+                p => p.Id, 
+                (o, p) => new { o, p })
                 .GroupBy(x=> new { x.p.Id, x.p.Name})
                 .Select(
                 g => new TopProductDto {
-                    ProductId = g.Key.Id
-                , ProductName = g.Key.Name
-                , TotalQuantitySold = g.Sum(x=>x.o.Quantity) })
+                    ProductId = g.Key.Id, 
+                    ProductName = g.Key.Name, 
+                    TotalQuantitySold = g.Sum(x=>x.o.Quantity) })
                 .OrderByDescending(dto=>dto.TotalQuantitySold)
                 .Take(3)
                 .ToList();

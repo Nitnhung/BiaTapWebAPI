@@ -5,27 +5,27 @@ using Microsoft.AspNetCore.Mvc;
 namespace BiaTapWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("api/categories")]
 
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
-        [HttpGet("Category Report")]
+        [HttpGet("ategory-report")]
         public IActionResult GetCategoryReport()
         {
             var result = _categoryService.GetCategoryReport();
             return Ok(result);
         }
 
-        [HttpGet("GetListCategoryDetail")]
-        public IActionResult GetListCategoryDetail(Category category, Product product)
+        [HttpGet("with-products")]
+        public IActionResult GetListCategoryDetail()
         {
-            var result = _categoryService.GetListCategoryDetail(category, product);
+            var result = _categoryService.GetListCategoryDetail();
             return Ok(result);
         }
     }
